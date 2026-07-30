@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{TITLE}}</title>
+  <meta name="description" content="Digital calling card" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <main class="card">
+    <h1 class="name">{{FULL_NAME}}</h1>
+    <div class="titles">
+      {{ROLES}}
+      <p class="org"><a href="{{ORG_URL}}" target="_blank" rel="noopener">{{ORG_NAME}}</a></p>
+    </div>
+    {{FEATURED}}
+
+    <ul class="contacts">
+      <li><a href="tel:{{PHONE}}"><span class="label">Phone</span></a></li>
+      <li><a href="mailto:{{EMAIL}}"><span class="label">Email</span></a></li>
+        {{LINKS}}
+    </ul>
+
+    <a class="save" href="/vcard">Save Contact</a>
+
+    <footer class="foot">{{LOCATION}}</footer>
+  </main>
+</body>
+</html>

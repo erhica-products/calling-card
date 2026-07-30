@@ -1,0 +1,28 @@
+{
+  "firstName": "{{FIRST_NAME}}",
+  "lastName": "{{LAST_NAME}}",
+  "fullName": "{{FULL_NAME}}",
+  "roles": [
+    "{{ROLE_PRIMARY}}",
+    "{{ROLE_SECONDARY}}"
+  ],
+  "organization": {
+    "name": "{{COMPANY_NAME}}",
+    "url": "{{COMPANY_URL}}"
+  },
+  "email": "{{EMAIL}}",
+  "phone": "{{PHONE_E164}}",
+  "location": {
+    "city": "{{CITY}}",
+    "country": "{{COUNTRY}}"
+  },
+  "featured": {
+    "label": "{{FEATURED_LABEL}}",
+    "url": "{{FEATURED_URL}}"
+  },
+  "links": [
+    { "type": "website",   "label": "Website",   "url": "{{WEBSITE_URL}}" },
+    { "type": "instagram", "label": "Instagram", "url": "{{INSTAGRAM_URL}}" },
+    { "type": "facebook",  "label": "Facebook",  "url": "{{FACEBOOK_URL}}" }
+  ]
+}

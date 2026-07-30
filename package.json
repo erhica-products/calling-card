@@ -1,0 +1,19 @@
+{
+  "name": "calling-card-backend",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Backend foundation for a digital calling card: serves a profile, generates a vCard, and accepts contact messages. Identity is driven entirely by data/profile.json.",
+  "type": "module",
+  "main": "src/server.js",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
