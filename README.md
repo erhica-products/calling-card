@@ -1,4 +1,13 @@
-# Calling Card — Backend
+# Calling Card
+
+### → **[View the card](https://erhica-products.github.io/calling-card/)**
+
+`https://erhica-products.github.io/calling-card/` — this is the link to share.
+The page you are reading now is the source code behind it.
+
+---
+
+## Backend
 
 A small, dependency-light backend foundation for a **digital calling card**.
 It serves a profile as an HTML card, generates a downloadable **vCard (.vcf)**
