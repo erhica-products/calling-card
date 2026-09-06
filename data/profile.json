@@ -27,7 +27,8 @@
       "label": "goodcup.ph",
       "display": "goodcup.ph",
       "url": "https://goodcup.ph",
-      "group": "company"
+      "group": "company",
+      "showIcon": false
     },
     {
       "type": "facebook",

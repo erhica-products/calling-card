@@ -30,7 +30,12 @@ async function main() {
 
   // Inline the stylesheet, swapping each @font-face src for a data URI.
   let css = await readFile(asset("public/styles.css"), "utf8");
-  for (const file of ["GoodSans-Light.otf", "GoodSans-Regular.otf", "GoodSans-Medium.otf"]) {
+  for (const file of [
+    "GoodSans-Light.otf",
+    "GoodSans-Regular.otf",
+    "GoodSans-Medium.otf",
+    "GoodSans-Bold.otf",
+  ]) {
     const uri = await dataUri(`public/fonts/${file}`, "font/otf");
     css = css.replaceAll(`url("/fonts/${file}")`, `url(${uri})`);
   }

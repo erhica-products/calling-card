@@ -10,6 +10,8 @@
   src:url("/fonts/GoodSans-Regular.otf") format("opentype"); font-display:swap; }
 @font-face { font-family:"Good Sans"; font-weight:500; font-style:normal;
   src:url("/fonts/GoodSans-Medium.otf") format("opentype"); font-display:swap; }
+@font-face { font-family:"Good Sans"; font-weight:700; font-style:normal;
+  src:url("/fonts/GoodSans-Bold.otf") format("opentype"); font-display:swap; }
 
 :root {
   /* Primary palette */
@@ -60,7 +62,8 @@ body {
 /* ── The card ─────────────────────────────────────────────────────────── */
 .card {
   width: 100%;
-  max-width: 420px;
+  max-width: 460px;
+  container-type: inline-size;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 22px;              /* cards: 14–22px, never pill */
@@ -92,11 +95,12 @@ body {
 }
 
 .name {
-  font-size: clamp(38px, 9vw, 52px);
-  font-weight: 300;
+  font-size: clamp(22px, 7.6vw, 38px);   /* fallback: no container queries */
+  font-size: 10.3cqw;
+  font-weight: 700;
   letter-spacing: -0.03em;
-  line-height: 1.04;
-  text-wrap: balance;
+  line-height: 1.1;
+  white-space: nowrap;
   margin-bottom: 20px;
 }
 

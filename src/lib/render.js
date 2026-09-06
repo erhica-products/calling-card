@@ -9,10 +9,11 @@ function escapeHtml(value = "") {
     .replace(/"/g, "&quot;");
 }
 
-// Every link with a URL gets an icon. The org website is included: as a globe
-// glyph it reads as part of the row rather than repeating the organization line.
+// Links with a URL get an icon, unless "showIcon": false. That flag keeps a
+// link in the vCard while leaving it off the card — the company website is
+// already carried by the organization line and the footer.
 function visibleLinks(profile) {
-  return (profile.links || []).filter((l) => l.url);
+  return (profile.links || []).filter((l) => l.url && l.showIcon !== false);
 }
 
 // "https://www.facebook.com/name/" -> "facebook.com/name"
