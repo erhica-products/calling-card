@@ -1,4 +1,5 @@
 import { readFile } from "node:fs/promises";
+import { icon } from "./icons.js";
 
 function escapeHtml(value = "") {
   return String(value)
@@ -8,13 +9,10 @@ function escapeHtml(value = "") {
     .replace(/"/g, "&quot;");
 }
 
-// A link is shown in the contacts list unless it just repeats the org website,
-// which already appears as the organization line under the name.
+// Every link with a URL gets an icon. The org website is included: as a globe
+// glyph it reads as part of the row rather than repeating the organization line.
 function visibleLinks(profile) {
-  const orgUrl = (profile.organization?.url || "").replace(/\/+$/, "");
-  return (profile.links || []).filter(
-    (l) => l.url && l.url.replace(/\/+$/, "") !== orgUrl
-  );
+  return (profile.links || []).filter((l) => l.url);
 }
 
 // "https://www.facebook.com/name/" -> "facebook.com/name"
@@ -22,12 +20,13 @@ function prettyUrl(url = "") {
   return String(url).replace(/^https?:\/\//i, "").replace(/^www\./i, "").replace(/\/+$/, "");
 }
 
-function contactRow(label, value, href) {
-  // mailto:/tel: stay in place; anything on the web opens in a new tab.
+function iconLink(type, title, href) {
+  // The glyph carries no text, so the accessible name and the tooltip both
+  // come from `title` — that is where the address or number now lives.
   const external = /^https?:/i.test(href) ? ' target="_blank" rel="noopener"' : "";
-  return `<li><a href="${escapeHtml(href)}"${external}><span class="label">${escapeHtml(
-    label
-  )}</span><span class="value">${escapeHtml(value)}</span></a></li>`;
+  return `<li><a href="${escapeHtml(href)}"${external} aria-label="${escapeHtml(
+    title
+  )}" title="${escapeHtml(title)}">${icon(type)}</a></li>`;
 }
 
 // Renders the card template. Intentionally a minimal server-side renderer
@@ -69,16 +68,21 @@ export async function renderCard(profile) {
       )} &rarr;</a></p>`
     : "";
 
+  // Links carry an optional `group` ("personal" by default). A hairline divider
+  // marks each change of group, so two Facebook glyphs in one row are still
+  // legible as "hers" and "the company's".
   const rows = [];
-  if (profile.email) rows.push(contactRow("Email", profile.email, `mailto:${profile.email}`));
+  let group = "personal";
+  if (profile.email) rows.push(iconLink("mail", profile.email, `mailto:${profile.email}`));
   if (profile.phone)
-    rows.push(contactRow("Phone", profile.phoneDisplay || profile.phone, `tel:${profile.phone}`));
+    rows.push(iconLink("phone", profile.phoneDisplay || profile.phone, `tel:${profile.phone}`));
   for (const link of visibleLinks(profile)) {
-    // `label` names the row (two Facebook links need two different names);
-    // `display` is what the row shows, defaulting to a tidied-up URL.
-    rows.push(
-      contactRow(link.label || link.type || "Link", link.display || prettyUrl(link.url), link.url)
-    );
+    const linkGroup = link.group || "personal";
+    if (rows.length && linkGroup !== group) {
+      rows.push('<li class="sep" aria-hidden="true"></li>');
+    }
+    group = linkGroup;
+    rows.push(iconLink(link.type, link.label || link.display || prettyUrl(link.url), link.url));
   }
 
   const footer = orgUrl
@@ -95,6 +99,6 @@ export async function renderCard(profile) {
     .replaceAll("{{ROLES}}", roles)
     .replaceAll("{{ORG}}", org)
     .replaceAll("{{FEATURED}}", featured)
-    .replaceAll("{{CONTACTS}}", rows.join("\n      "))
+    .replaceAll("{{LINKS}}", rows.join("\n      "))
     .replaceAll("{{FOOTER}}", footer);
 }

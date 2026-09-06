@@ -18,11 +18,12 @@
   --gc-robusta: #46362B;
 
   /* Semantic */
-  --bg:         var(--gc-crema);
-  --surface:    #FFFFFF;
+  --bg:         var(--gc-cashew);   /* warm stone ground */
+  --surface:    var(--gc-crema);    /* the card itself is cream */
+  --surface-alt: #E4DFD8;           /* Crema, a shade down — icon wells */
   --fg:         var(--gc-robusta);
   --fg-muted:   #6B5A4D;
-  --border:     #D8CFC6;
+  --border:     #C9BFB5;   /* reads against Crema, not white */
   --divider:    rgba(70, 54, 43, 0.10);
 
   /* One accent per artifact — Dulce Coral */
@@ -68,36 +69,47 @@ body {
 }
 
 /* Logo — treated with clearspace, never crowded */
-.brand { margin-bottom: 48px; }
-.brand img { display: block; height: 32px; width: auto; }
+.brand { margin-bottom: 56px; }
+.brand img { display: block; height: 48px; width: auto; }
 
 /* Eyebrow — all-caps, wide tracking, the single coral moment */
+/* The single accent: a 24px coral hairline above the location label. */
 .eyebrow {
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 500;
-  letter-spacing: var(--tracking-eyebrow);
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--accent);
-  margin-bottom: 16px;
+  color: var(--fg-muted);
+  margin-bottom: 20px;
+}
+.eyebrow::before {
+  content: "";
+  display: block;
+  width: 24px;
+  height: 1.5px;
+  background: var(--accent);
+  margin-bottom: 20px;
 }
 
 .name {
-  font-size: clamp(34px, 8.5vw, 44px);
-  font-weight: 500;
-  letter-spacing: -0.025em;
-  line-height: 1.02;
-  margin-bottom: 12px;
+  font-size: clamp(38px, 9vw, 52px);
+  font-weight: 300;
+  letter-spacing: -0.03em;
+  line-height: 1.04;
+  text-wrap: balance;
+  margin-bottom: 20px;
 }
 
-.roles { margin-bottom: 12px; }
+.roles { margin-bottom: 14px; }
 .role {
-  font-size: 14px;
+  font-size: 13.5px;
   font-weight: 400;
   color: var(--fg-muted);
-  line-height: 1.35;
+  line-height: 1.45;
+  letter-spacing: 0.005em;
 }
 
-.org { font-size: 16px; }
+.org { font-size: 15px; }
 .org a {
   color: var(--fg);
   font-weight: 500;
@@ -115,49 +127,56 @@ body {
   padding-bottom: 2px;
 }
 
-/* ── Contact rows ─────────────────────────────────────────────────────── */
-.contacts {
+/* ── Contact icons ────────────────────────────────────────────────────── */
+.links {
   list-style: none;
-  margin: 32px 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 40px 0;
+  padding-top: 36px;
   border-top: 1px solid var(--divider);
 }
-.contacts li { border-bottom: 1px solid var(--divider); }
-.contacts a {
-  display: block;
-  padding: 16px 0;
-  text-decoration: none;
+.links a {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(70, 54, 43, 0.14);
+  border-radius: 999px;
   color: var(--fg);
-  transition: opacity var(--dur-medium) var(--ease-standard);
+  background: transparent;
+  transition: background var(--dur-medium) var(--ease-standard),
+              border-color var(--dur-medium) var(--ease-standard);
 }
-.contacts a:hover { opacity: 0.7; }
-.contacts .label {
-  display: block;
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: var(--tracking-eyebrow);
-  text-transform: uppercase;
-  color: var(--fg-muted);
-  margin-bottom: 4px;
+/* Pastels hover to their sibling — the one accent moment on the card. */
+.links a:hover {
+  background: var(--accent);
+  border-color: var(--accent);
 }
-.contacts .value {
-  display: block;
-  font-size: 16px;
-  font-weight: 400;
-  word-break: break-word;
+.links a:active { transform: scale(0.98); }
+
+/* Divides her own links from Good Cup's. */
+.links .sep {
+  width: 1px;
+  height: 24px;
+  align-self: center;
+  background: rgba(70, 54, 43, 0.16);
+  margin: 0 6px;
 }
 
 /* ── Save contact — pill, primary CTA ─────────────────────────────────── */
 .save {
   display: block;
   text-align: center;
-  padding: 16px 24px;
+  padding: 17px 24px;
   background: var(--fg);
   color: var(--gc-crema);
   border-radius: 999px;
   text-decoration: none;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 500;
-  letter-spacing: var(--tracking-eyebrow);
+  letter-spacing: 0.22em;
   text-transform: uppercase;
   transition: background var(--dur-medium) var(--ease-standard),
               box-shadow var(--dur-medium) var(--ease-standard);
@@ -166,14 +185,14 @@ body {
 .save:active { transform: scale(0.98); }
 
 .foot {
-  margin-top: 32px;
-  padding-top: 24px;
+  margin-top: 40px;
+  padding-top: 28px;
   border-top: 1px solid var(--divider);
-  font-size: 11px;
+  font-size: 10.5px;
   font-weight: 400;
-  letter-spacing: var(--tracking-eyebrow);
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--fg-muted);
+  color: var(--fg-subtle, #8C7D71);
 }
 
 /* Focus — visible, respectful */
@@ -185,5 +204,5 @@ a:focus-visible {
 
 @media (max-width: 380px) {
   .card { padding: 32px 24px 24px; border-radius: 14px; }
-  .brand { margin-bottom: 40px; }
+  .brand { margin-bottom: 56px; }
 }

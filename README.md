@@ -65,9 +65,15 @@ array) and its row drops out of the card rather than rendering blank:
 `roles`, `phone` and `featured` are empty today — fill them in and the card and
 the vCard pick them up on the next request, no code change.
 
-Each entry in `links` takes a `type` (drives the vCard), a `label` (the row name
-on the card) and an optional `display` (what the row shows; defaults to a tidied
-URL). Two links may share a `type` — the two Facebook rows differ by `label`.
+Each entry in `links` takes a `type`, a `label` and an optional `group`:
+
+- `type` drives both the vCard line and which icon is drawn. Supported icons
+  live in `src/lib/icons.js`: `mail`, `phone`, `website`, `facebook`,
+  `instagram`, `linkedin`, `youtube`, and a `link` fallback for anything else.
+- `label` is the icon's accessible name and hover tooltip. The glyph carries no
+  visible text, so this is where the address, number or handle lives.
+- `group` is `"personal"` (default) or `"company"`. A hairline divider is drawn
+  wherever the group changes, so her own links read separately from Good Cup's.
 
 Add more links by extending the `links` array — any `type` in the social set
 (`instagram`, `facebook`, `linkedin`, `twitter`, `tiktok`, `youtube`) is emitted

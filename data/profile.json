@@ -23,15 +23,17 @@
   "links": [
     {
       "type": "website",
-      "label": "Website",
+      "label": "goodcup.ph",
       "display": "goodcup.ph",
-      "url": "https://goodcup.ph"
+      "url": "https://goodcup.ph",
+      "group": "company"
     },
     {
       "type": "facebook",
       "label": "Good Cup on Facebook",
       "display": "thegoodcupcoffeeco",
-      "url": "https://www.facebook.com/thegoodcupcoffeeco/"
+      "url": "https://www.facebook.com/thegoodcupcoffeeco/",
+      "group": "company"
     }
   ]
 }
