@@ -34,6 +34,13 @@
       "display": "thegoodcupcoffeeco",
       "url": "https://www.facebook.com/thegoodcupcoffeeco/",
       "group": "company"
+    },
+    {
+      "type": "instagram",
+      "label": "Good Cup on Instagram",
+      "display": "thegoodcupcoffeeco",
+      "url": "https://www.instagram.com/thegoodcupcoffeeco/",
+      "group": "company"
     }
   ]
 }
