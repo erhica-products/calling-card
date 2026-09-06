@@ -1,35 +1,189 @@
-/* Neutral starter styling. Kirk owns the design — replace freely. */
+/* Good Cup Coffee Co. — digital calling card
+ * Design system: ~/.claude/skills/good-cup-design (colors_and_type.css)
+ * Robusta on Crema, Dulce Coral as the single accent, Good Sans throughout.
+ */
+
+/* ── Good Sans (Good Type Foundry) — the only typeface ───────────────── */
+@font-face { font-family:"Good Sans"; font-weight:300; font-style:normal;
+  src:url("/fonts/GoodSans-Light.otf") format("opentype"); font-display:swap; }
+@font-face { font-family:"Good Sans"; font-weight:400; font-style:normal;
+  src:url("/fonts/GoodSans-Regular.otf") format("opentype"); font-display:swap; }
+@font-face { font-family:"Good Sans"; font-weight:500; font-style:normal;
+  src:url("/fonts/GoodSans-Medium.otf") format("opentype"); font-display:swap; }
+
 :root {
-  --bg: #ede9e4;
-  --ink: #1a1a1a;
-  --muted: #6b6b6b;
-  --rule: #d4cfc8;
-  --accent: #1a1a1a;
+  /* Primary palette */
+  --gc-crema:   #EDE9E4;
+  --gc-cashew:  #D1C8C1;
+  --gc-robusta: #46362B;
+
+  /* Semantic */
+  --bg:         var(--gc-crema);
+  --surface:    #FFFFFF;
+  --fg:         var(--gc-robusta);
+  --fg-muted:   #6B5A4D;
+  --border:     #D8CFC6;
+  --divider:    rgba(70, 54, 43, 0.10);
+
+  /* One accent per artifact — Dulce Coral */
+  --accent:     #F28778;
+
+  --font-sans: "Good Sans", "DM Sans", ui-sans-serif, -apple-system,
+               BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+
+  --tracking-eyebrow: 0.18em;
+  --shadow-md: 0 6px 18px rgba(70, 54, 43, 0.10);
+  --shadow-lg: 0 18px 40px rgba(70, 54, 43, 0.14);
+  --ease-standard: cubic-bezier(.22,.61,.36,1);
+  --dur-medium: 240ms;
 }
+
 * { box-sizing: border-box; margin: 0; padding: 0; }
+
 body {
   background: var(--bg);
-  color: var(--ink);
-  font: 400 16px/1.5 system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  color: var(--fg);
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 2rem 1.25rem;
+  padding: 48px 24px;
 }
-.card { width: 100%; max-width: 360px; text-align: center; }
-.name { font-size: 1.6rem; font-weight: 500; letter-spacing: 0.02em; margin-bottom: 1rem; }
-.titles { margin-bottom: 1.5rem; }
-.role { color: var(--muted); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.14em; }
-.org a { color: var(--ink); font-weight: 500; text-decoration: none; }
-.featured { margin: 0 0 1.5rem; font-size: 0.9rem; }
-.featured a { color: var(--muted); }
-.contacts { list-style: none; border-top: 1px solid var(--rule); margin-bottom: 1.75rem; }
-.contacts li { border-bottom: 1px solid var(--rule); }
-.contacts a { display: block; padding: 0.85rem 0; text-decoration: none; color: var(--ink); }
-.contacts .label { font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); }
+
+/* ── The card ─────────────────────────────────────────────────────────── */
+.card {
+  width: 100%;
+  max-width: 420px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 22px;              /* cards: 14–22px, never pill */
+  box-shadow: var(--shadow-md);
+  padding: 40px 32px 32px;
+}
+
+/* Logo — treated with clearspace, never crowded */
+.brand { margin-bottom: 48px; }
+.brand img { display: block; height: 32px; width: auto; }
+
+/* Eyebrow — all-caps, wide tracking, the single coral moment */
+.eyebrow {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 16px;
+}
+
+.name {
+  font-size: clamp(34px, 8.5vw, 44px);
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.02;
+  margin-bottom: 12px;
+}
+
+.roles { margin-bottom: 12px; }
+.role {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--fg-muted);
+  line-height: 1.35;
+}
+
+.org { font-size: 16px; }
+.org a {
+  color: var(--fg);
+  font-weight: 500;
+  text-decoration: none;
+  border-bottom: 1.5px solid transparent;
+  transition: border-color var(--dur-medium) var(--ease-standard);
+}
+.org a:hover { border-bottom-color: var(--accent); }
+
+.featured { margin-top: 24px; font-size: 15px; }
+.featured a {
+  color: var(--fg);
+  text-decoration: none;
+  border-bottom: 1.5px solid var(--accent);
+  padding-bottom: 2px;
+}
+
+/* ── Contact rows ─────────────────────────────────────────────────────── */
+.contacts {
+  list-style: none;
+  margin: 32px 0;
+  border-top: 1px solid var(--divider);
+}
+.contacts li { border-bottom: 1px solid var(--divider); }
+.contacts a {
+  display: block;
+  padding: 16px 0;
+  text-decoration: none;
+  color: var(--fg);
+  transition: opacity var(--dur-medium) var(--ease-standard);
+}
+.contacts a:hover { opacity: 0.7; }
+.contacts .label {
+  display: block;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--fg-muted);
+  margin-bottom: 4px;
+}
+.contacts .value {
+  display: block;
+  font-size: 16px;
+  font-weight: 400;
+  word-break: break-word;
+}
+
+/* ── Save contact — pill, primary CTA ─────────────────────────────────── */
 .save {
-  display: block; padding: 0.9rem; background: var(--accent); color: var(--bg);
-  text-decoration: none; letter-spacing: 0.2em; text-transform: uppercase; font-size: 0.7rem;
+  display: block;
+  text-align: center;
+  padding: 16px 24px;
+  background: var(--fg);
+  color: var(--gc-crema);
+  border-radius: 999px;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  transition: background var(--dur-medium) var(--ease-standard),
+              box-shadow var(--dur-medium) var(--ease-standard);
 }
-.foot { margin-top: 1.75rem; color: var(--muted); font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; }
+.save:hover { background: #3A2C23; box-shadow: var(--shadow-lg); }
+.save:active { transform: scale(0.98); }
+
+.foot {
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid var(--divider);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+
+/* Focus — visible, respectful */
+a:focus-visible {
+  outline: 2px solid var(--fg);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+@media (max-width: 380px) {
+  .card { padding: 32px 24px 24px; border-radius: 14px; }
+  .brand { margin-bottom: 40px; }
+}

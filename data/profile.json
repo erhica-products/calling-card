@@ -1,28 +1,37 @@
 {
-  "firstName": "{{FIRST_NAME}}",
-  "lastName": "{{LAST_NAME}}",
-  "fullName": "{{FULL_NAME}}",
+  "firstName": "Erhica",
+  "lastName": "Sager",
+  "fullName": "Erhica Amyr Sager",
   "roles": [
-    "{{ROLE_PRIMARY}}",
-    "{{ROLE_SECONDARY}}"
+    "Executive Assistant to President",
+    "Products Manager"
   ],
   "organization": {
-    "name": "{{COMPANY_NAME}}",
-    "url": "{{COMPANY_URL}}"
+    "name": "Good Cup Coffee Co.",
+    "url": "https://goodcup.ph"
   },
-  "email": "{{EMAIL}}",
-  "phone": "{{PHONE_E164}}",
+  "email": "erhica@goodcup.ph",
+  "phone": "",
   "location": {
-    "city": "{{CITY}}",
-    "country": "{{COUNTRY}}"
+    "city": "Cebu City",
+    "country": "Philippines"
   },
   "featured": {
-    "label": "{{FEATURED_LABEL}}",
-    "url": "{{FEATURED_URL}}"
+    "label": "",
+    "url": ""
   },
   "links": [
-    { "type": "website",   "label": "Website",   "url": "{{WEBSITE_URL}}" },
-    { "type": "instagram", "label": "Instagram", "url": "{{INSTAGRAM_URL}}" },
-    { "type": "facebook",  "label": "Facebook",  "url": "{{FACEBOOK_URL}}" }
+    {
+      "type": "website",
+      "label": "Website",
+      "display": "goodcup.ph",
+      "url": "https://goodcup.ph"
+    },
+    {
+      "type": "facebook",
+      "label": "Good Cup on Facebook",
+      "display": "thegoodcupcoffeeco",
+      "url": "https://www.facebook.com/thegoodcupcoffeeco/"
+    }
   ]
 }

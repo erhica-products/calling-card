@@ -45,7 +45,9 @@ curl -X POST http://localhost:3000/api/contact \
 ## Configure your identity
 
 Everything the card and vCard render comes from `data/profile.json`.
-Out of the box it ships with placeholder tokens — replace them:
+It is filled in for Erhica Amyr Sager / Good Cup Coffee Co. Every field below is
+optional except `fullName` and `email` — leave one empty (`""`, or an empty
+array) and its row drops out of the card rather than rendering blank:
 
 | Token                 | Meaning                          |
 |-----------------------|----------------------------------|
@@ -54,20 +56,77 @@ Out of the box it ships with placeholder tokens — replace them:
 | `{{ROLE_PRIMARY}}` / `{{ROLE_SECONDARY}}` | Job titles / roles |
 | `{{COMPANY_NAME}}` / `{{COMPANY_URL}}` | Organization |
 | `{{EMAIL}}`           | Contact email                    |
-| `{{PHONE_E164}}`      | Phone in E.164, e.g. `+10000000000` |
+| `{{PHONE_E164}}`      | Phone in E.164, e.g. `+10000000000` — drives `tel:` and the vCard |
+| `phoneDisplay`        | Optional readable form shown on the card; falls back to `phone` |
 | `{{CITY}}` / `{{COUNTRY}}` | Location footer             |
 | `{{FEATURED_LABEL}}` / `{{FEATURED_URL}}` | Optional highlighted link |
 | `{{WEBSITE_URL}}` / `{{INSTAGRAM_URL}}` / `{{FACEBOOK_URL}}` | Links row |
+
+`roles`, `phone` and `featured` are empty today — fill them in and the card and
+the vCard pick them up on the next request, no code change.
+
+Each entry in `links` takes a `type` (drives the vCard), a `label` (the row name
+on the card) and an optional `display` (what the row shows; defaults to a tidied
+URL). Two links may share a `type` — the two Facebook rows differ by `label`.
 
 Add more links by extending the `links` array — any `type` in the social set
 (`instagram`, `facebook`, `linkedin`, `twitter`, `tiktok`, `youtube`) is emitted
 to the vCard as `X-SOCIALPROFILE`; `website`/`url` become a `URL` line.
 
+## Design
+
+The card uses the **Good Cup design system** — Robusta `#46362B` on Crema `#EDE9E4`,
+Dulce Coral `#F28778` as the single accent, Good Sans throughout. Source of truth:
+`~/.claude/skills/good-cup-design` (`colors_and_type.css`, `README.md`).
+
+- `public/styles.css` — brand tokens + card styling.
+- `public/fonts/` — Good Sans Light / Regular / Medium, self-hosted so the card
+  renders correctly offline and behind any CSP. Copied from the design system;
+  do not re-export.
+- `public/img/` — `logo-horizontal.png` (card header) and `logo-mark.png` (favicon),
+  copied from `assets/` in the design system. Never redraw or rasterize a logo.
+
+## Hosting (GitHub Pages)
+
+The public card is served from `docs/` at
+**https://erhica-products.github.io/calling-card/** — a static build, because
+Pages cannot run the Express app.
+
+```bash
+npm run build:static     # regenerates docs/ from data/profile.json
+```
+
+`docs/` is generated, never hand-edited. The build reads the same
+`data/profile.json`, `src/views/card.html` and `public/styles.css` the server
+uses, inlines the CSS, Good Sans and logos as data URIs, and points
+"Save contact" at `docs/erhica-amyr-sager.vcf` instead of the `/vcard` route.
+Rebuild and commit `docs/` whenever the profile changes.
+
+Repo settings → Pages → Source: `main` branch, `/docs` folder.
+
+### Two profiles, on purpose
+
+| File | Committed | Contents |
+|---|---|---|
+| `data/profile.json` | yes | Work contacts only — name, position, work email, company site, Good Cup's Facebook page. This is what the public site shows. |
+| `data/profile.local.json` | **no** (gitignored) | The full card, including the personal mobile and personal Facebook profile. |
+
+The published site is public and indexed, so personal contact details stay out
+of the repo entirely. `build:static` reads only `data/profile.json` and never
+the local file. To run the server against the full profile:
+
+```bash
+PROFILE_PATH=data/profile.local.json npm start
+```
+
 ## Project layout
 
 ```
-data/profile.json      # placeholder-driven identity (the single source of truth)
-public/                # static assets (CSS today; images/favicon later)
+data/profile.json      # public identity — the single source of truth
+data/profile.local.json # full identity incl. personal contacts (gitignored)
+docs/                  # generated static site for GitHub Pages
+scripts/build-static.mjs # builds docs/ from the profile + template + styles
+public/                # brand stylesheet, Good Sans fonts, logo assets
 src/
   server.js            # Express app factory + entrypoint
   config.js            # env-backed config with safe defaults

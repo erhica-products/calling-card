@@ -4,27 +4,30 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{{TITLE}}</title>
-  <meta name="description" content="Digital calling card" />
+  <meta name="description" content="{{DESCRIPTION}}" />
+  <meta name="theme-color" content="#EDE9E4" />
+  <link rel="icon" href="/img/logo-mark.png" />
   <link rel="stylesheet" href="/styles.css" />
 </head>
 <body>
   <main class="card">
-    <h1 class="name">{{FULL_NAME}}</h1>
-    <div class="titles">
-      {{ROLES}}
-      <p class="org"><a href="{{ORG_URL}}" target="_blank" rel="noopener">{{ORG_NAME}}</a></p>
+    <div class="brand">
+      <img src="/img/logo-horizontal.png" alt="Good Cup Coffee Co." />
     </div>
+
+    {{EYEBROW}}
+    <h1 class="name">{{FULL_NAME}}</h1>
+    {{ROLES}}
+    {{ORG}}
     {{FEATURED}}
 
     <ul class="contacts">
-      <li><a href="tel:{{PHONE}}"><span class="label">Phone</span></a></li>
-      <li><a href="mailto:{{EMAIL}}"><span class="label">Email</span></a></li>
-        {{LINKS}}
+      {{CONTACTS}}
     </ul>
 
-    <a class="save" href="/vcard">Save Contact</a>
+    <a class="save" href="/vcard">Save contact</a>
 
-    <footer class="foot">{{LOCATION}}</footer>
+    {{FOOTER}}
   </main>
 </body>
 </html>
